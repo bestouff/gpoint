@@ -182,6 +182,6 @@ mod tests {
     }
     #[test]
     fn in_context() {
-        assert_eq!(&format!("answer={}!", 42.), "answer=42!");
+        assert_eq!(&format!("answer={}!", GPoint(42.)), "answer=42!");
     }
 }
