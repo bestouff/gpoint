@@ -17,7 +17,7 @@ Then wrap your `f64` with a `GPoint`:
 ```
 use gpoint::GPoint;
 
-println!("answer: {:.3}", GPoint(42.));
+println!("answer: {}", GPoint(42.));
 ```
 
 See the [API documentation](https://docs.rs/gpoint) for further details.
