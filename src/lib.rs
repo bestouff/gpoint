@@ -180,4 +180,8 @@ mod tests {
             assert_eq!(&format!("{:#}", num), res);
         }
     }
+    #[test]
+    fn in_context() {
+        assert_eq!(&format!("answer={}!", 42.), "answer=42!");
+    }
 }
