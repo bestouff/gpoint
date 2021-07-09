@@ -35,12 +35,12 @@ impl std::fmt::Display for GPoint {
 }
 
 const FORMAT_SIZE: usize = 20;
-const NUMSTR_SIZE: usize = 20;
+const NUMSTR_SIZE: usize = 200;
 
 fn fmt_g(formatter: &mut fmt::Formatter<'_>, value: Float) -> fmt::Result {
     let mut format = [0u8; FORMAT_SIZE];
     let numstr = [0u8; NUMSTR_SIZE];
-    let mut fmtbuf = std::io::Cursor::new(&mut format as &mut [u8]);
+    let mut fmtbuf = std::io::Cursor::new(&mut format[..FORMAT_SIZE - 1]); // keep final 0
 
     let zero_pad = if formatter.sign_aware_zero_pad() {
         "0"
@@ -65,11 +65,12 @@ fn fmt_g(formatter: &mut fmt::Formatter<'_>, value: Float) -> fmt::Result {
     let nbchars = unsafe {
         libc::snprintf(
             numstr.as_ptr() as *mut i8,
-            FORMAT_SIZE,
+            NUMSTR_SIZE,
             format.as_ptr() as *const i8,
             value,
         )
     };
+    // check if we (virtually) overflowed our buffer
     if nbchars < 0 || nbchars >= NUMSTR_SIZE as i32 {
         return Err(fmt::Error);
     }
