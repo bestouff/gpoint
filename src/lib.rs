@@ -2,6 +2,7 @@
 
 //! Wrapper for using libc's `printf("%g")` format for your floating point output
 
+use libc::c_char;
 use std::fmt;
 use std::io::Write;
 
@@ -64,9 +65,9 @@ fn fmt_g(formatter: &mut fmt::Formatter<'_>, value: Float) -> fmt::Result {
     .map_err(|_| fmt::Error)?;
     let nbchars = unsafe {
         libc::snprintf(
-            numstr.as_ptr() as *mut i8,
+            numstr.as_ptr() as *mut c_char,
             NUMSTR_SIZE,
-            format.as_ptr() as *const i8,
+            format.as_ptr() as *const c_char,
             value,
         )
     };
