@@ -6,9 +6,6 @@ use libc::c_char;
 use std::fmt;
 use std::io::Write;
 
-// TODO depend on `num-traits`, be generic on Float
-type Float = f64;
-
 /// A wrapper around floats providing an implementation of `Display` which uses
 /// the underlying `libc`'s `printf()` with format `"%g"`, for when you need to
 /// match exactly what C a program would output.
@@ -17,7 +14,8 @@ type Float = f64;
 /// ```
 /// use gpoint::GPoint;
 ///
-/// assert!(format!("{}",    GPoint(42.))    == "42");
+/// assert!(format!("{}",    GPoint(42f32))  == "42");
+/// assert!(format!("{}",    GPoint(42f64))  == "42");
 /// assert!(format!("{:.3}", GPoint(1.2345)) == "1.23");
 /// assert!(format!("{:4}",  GPoint(42.))    == "  42");
 /// assert!(format!("{:-4}", GPoint(42.))    == "42  ");
@@ -27,18 +25,24 @@ type Float = f64;
 /// ```
 #[derive(Debug, Default, Clone, Copy)]
 #[repr(transparent)]
-pub struct GPoint(pub Float);
+pub struct GPoint<Float>(pub Float);
 
-impl std::fmt::Display for GPoint {
+impl std::fmt::Display for GPoint<f64> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt_g(f, self.0)
+    }
+}
+
+impl std::fmt::Display for GPoint<f32> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt_g(f, self.0 as f64)
     }
 }
 
 const FORMAT_SIZE: usize = 20;
 const NUMSTR_SIZE: usize = 200;
 
-fn fmt_g(formatter: &mut fmt::Formatter<'_>, value: Float) -> fmt::Result {
+fn fmt_g(formatter: &mut fmt::Formatter<'_>, value: f64) -> fmt::Result {
     let mut format = [0u8; FORMAT_SIZE];
     let numstr = [0u8; NUMSTR_SIZE];
     let mut fmtbuf = std::io::Cursor::new(&mut format[..FORMAT_SIZE - 1]); // keep final 0
