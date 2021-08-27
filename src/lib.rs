@@ -17,13 +17,13 @@ type Float = f64;
 /// ```
 /// use gpoint::GPoint;
 ///
-/// format!("{}", GPoint(42.));             // => "42"
-/// format!("{:.3}", GPoint(1.2345));       // => "1.23"
-/// format!("{:4}", GPoint(42.));           // => "  42"
-/// format!("{:-4}", GPoint(42.));          // => "42  "
-/// format!("{:04}", GPoint(42.));          // => "0042"
-/// format!("{:+}", GPoint(42.));           // => "+42"
-/// format!("{:#4}", GPoint(42.));          // => "42.00"
+/// assert!(format!("{}",    GPoint(42.))    == "42");
+/// assert!(format!("{:.3}", GPoint(1.2345)) == "1.23");
+/// assert!(format!("{:4}",  GPoint(42.))    == "  42");
+/// assert!(format!("{:-4}", GPoint(42.))    == "42  ");
+/// assert!(format!("{:04}", GPoint(42.))    == "0042");
+/// assert!(format!("{:+}",  GPoint(42.))    == "+42");
+/// assert!(format!("{:#4}", GPoint(42.))    == "42.0000");
 /// ```
 #[derive(Debug, Default, Clone, Copy)]
 #[repr(transparent)]
