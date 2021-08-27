@@ -9,10 +9,10 @@ with the rest of your dependencies:
 
 ```toml
 [dependencies]
-gpoint = "0.1"
+gpoint = "0.2"
 ```
 
-Then wrap your `f64` with a `GPoint`:
+Then wrap your `f32` or `f64` with a `GPoint`:
 
 ```
 use gpoint::GPoint;
@@ -21,8 +21,4 @@ println!("answer: {}", GPoint(42.));
 ```
 
 See the [API documentation](https://docs.rs/gpoint) for further details.
-
-## TODO
-
-- [ ] be available for `f32` (for now it's `f64` only)
 

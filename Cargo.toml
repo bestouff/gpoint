@@ -1,6 +1,6 @@
 [package]
 name = "gpoint"
-version = "0.1.4"
+version = "0.2.0"
 authors = ["Xavier Bestel <xav@bes.tel>"]
 edition = "2018"
 description = "Wrapper for using libc's `printf(\"%g\")` format for your floating point output"
