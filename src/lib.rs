@@ -10,6 +10,8 @@ use std::io::Write;
 /// the underlying `libc`'s `printf()` with format `"%g"`, for when you need to
 /// match exactly what C a program would output.
 ///
+/// `Float` should be a floating point type, i.e. `f32` or `f64`.
+///
 /// Available formatting options:
 /// ```
 /// use gpoint::GPoint;
@@ -25,7 +27,10 @@ use std::io::Write;
 /// ```
 #[derive(Debug, Default, Clone, Copy)]
 #[repr(transparent)]
-pub struct GPoint<Float>(pub Float);
+pub struct GPoint<Float>(
+    /// Your floating point number you want to `Display`
+    pub Float,
+);
 
 impl std::fmt::Display for GPoint<f64> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
